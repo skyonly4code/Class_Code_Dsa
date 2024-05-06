@@ -1,0 +1,28 @@
+int* visited = (int*)malloc(n * sizeof(int));
+    int* result = (int*)malloc(n * sizeof(int));
+    int idx = 0;
+
+    for (int i = 0; i < n; i++) {
+        visited[i] = 0;
+        result[i] = -1;
+    }
+
+    struct Queue* queue = createQueue(n);
+    enqueue(queue, 0);
+    visited[0] = 1;
+
+    while (!isEmpty(queue)) {
+        int current = dequeue(queue);
+        result[idx++] = current;
+        struct ListNode* temp = g->head[current];
+        while (temp != NULL) {
+            if (!visited[temp->data]) {
+                visited[temp->data] = 1;
+                enqueue(queue, temp->data);
+            }
+            temp = temp->next;
+        }
+    }
+
+    g->connected_with_zero = idx;
+    return result;
